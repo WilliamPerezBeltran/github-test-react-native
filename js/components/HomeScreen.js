@@ -11,7 +11,8 @@ import {
     Image
 } from "react-native";
 import * as FetchData from "../services/FetchGists";
-
+import { storeGistDetail } from "../ActionCreators";
+import { connect } from "react-redux";
 var dimensions = {
     width: Dimensions.get("window").width / 1.5,
 };
@@ -38,9 +39,9 @@ class HomeScreen extends Component {
             }
     };
 
-    GoToDetails = company => {
+    GoToDetails = gistsId => {
+      this.props.dispatch(storeGistDetail(gistsId));
       this.props.navigation.navigate("Details")
-        
     };
 
   render() {
@@ -52,7 +53,7 @@ class HomeScreen extends Component {
                       <TouchableOpacity
                           key={itemId}
                           onPress={() => {
-                              this.GoToDetails(itemId);
+                              this.GoToDetails(item.id);
                           }}
                       >
                           <View
@@ -124,7 +125,7 @@ class HomeScreen extends Component {
   }
 }
 
-export default HomeScreen;
+
 
 const styles = StyleSheet.create({
     container: {
@@ -185,3 +186,19 @@ const styles = StyleSheet.create({
     }
 });
 
+const mapStateToProps = state => {
+    return {
+        gistsId: state.reducer_gist_id.gistsId,
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+      dispatch,
+        storeGistDetail(gistsId) {
+            dispatch(storeGistDetail(gistsId));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
