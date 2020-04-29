@@ -1,43 +1,18 @@
-import * as React from 'react';
-import { Button, View, Text } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import React, { Component } from "react";
+import { Platform, Text, View } from "react-native";
+// import Icon from "react-native-vector-icons/Ionicons";
+// import SplashScreen from "react-native-splash-screen";
+import ConfigRoutes from "./js/ConfigRoutes";
+// import store from "./js/Store";
+// import { Provider } from "react-redux";
 
-function HomeScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Screen</Text>
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate('Details')}
-      />
-    </View>
-  );
+
+
+export default class App extends React.Component {
+ 
+  render() {
+    return (
+        <ConfigRoutes />
+    );
+  }
 }
-
-function DetailsScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Details Screen</Text>
-      <Button
-        title="Go to Details... again"
-        onPress={() => navigation.navigate('Details')}
-      />
-    </View>
-  );
-}
-
-const Stack = createStackNavigator();
-
-function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-}
-
-export default App;
