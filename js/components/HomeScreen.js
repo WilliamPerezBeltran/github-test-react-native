@@ -39,6 +39,7 @@ class HomeScreen extends Component {
     };
 
     GoToDetails = company => {
+      this.props.navigation.navigate("Details")
         
     };
 
