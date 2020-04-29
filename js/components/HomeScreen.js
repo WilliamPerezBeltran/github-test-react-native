@@ -5,16 +5,10 @@ import {
     View,
     Button,
     StyleSheet,
-    TextInput,
     Dimensions,
     TouchableOpacity,
     ScrollView,
-    TouchableHighlight,
-    Modal,
-    AsyncStorage,
-    TouchableWithoutFeedback,
-    ToastAndroid,
-    Alert
+    Image
 } from "react-native";
 import * as FetchData from "../services/FetchGists";
 
@@ -27,52 +21,99 @@ class HomeScreen extends Component {
         super(props);
         this.state = {
             data: {},
+            fetchDataConfirmation: false,
         };
     }
 
    componentDidMount = async () => {
           const fetchedData = await FetchData.FetchAllGist();
           console.log(fetchedData)
-          this.setState({ data: fetchedData });
+          if (fetchedData) {
+                this.setState({ 
+                  data: fetchedData,
+                  fetchDataConfirmation: true 
+                });
+            } else {
+                alert("error en el fetch companies");
+            }
+    };
+
+    GoToDetails = company => {
+        
     };
 
   render() {
+     let fetchedData = null;
+        if (this.state.fetchDataConfirmation) {
+            fetchedData = (
+                this.state.data.map((item, itemId) => {
+                  return (
+                      <TouchableOpacity
+                          key={itemId}
+                          onPress={() => {
+                              this.GoToDetails(itemId);
+                          }}
+                      >
+                          <View
+                              style={[
+                                  styles.Card,
+                                  { width: dimensions.width }
+                              ]}
+                          >
+                              <View>
+                                  <View style={styles.containerText}>
+                                  <Image source = {{uri: item.owner.avatar_url}}
+                                  style={styles.imageProfile}
+                                  />
+                                  </View>
+                              </View>
+
+                              <View>
+                                  <View style={styles.containerText}>
+                                      <Text style={styles.SubTitleCard}>
+                                          nombre:
+                                      </Text>
+                                      <Text>
+                                          {item.owner.login}
+                                      </Text>
+                                  </View>
+                              </View>
+                              <View>
+                                  <View style={styles.containerText}>
+                                      <Text style={styles.SubTitleCard}>
+                                          Descripción:
+                                      </Text>
+                                      <Text style={styles.SubTitleCardDescription}>
+                                          {item.description}
+                                      </Text>
+                                  </View>
+                              </View>
+                               <View>
+                                  <View style={styles.containerText}>
+                                      <Text style={styles.SubTitleCard}>
+                                          Fecha de creación:
+                                      </Text>
+                                      <Text>
+                                          {new Date(item.created_at).toDateString()}
+                                      </Text>
+                                  </View>
+                              </View>
+                          </View>
+                      </TouchableOpacity>
+                  );
+              })
+            );
+        }
+
      return (
       <View style={styles.container}>
+        <View>
+            <Text style={styles.Title}>Listar gists</Text>
+        </View>
         <ScrollView>
-          <View style={styles.InnerContainer}>
-              <Text style={styles.Title}>Pagar recibo</Text>
-              <View
-                  style={[
-                      styles.Card,
-                      { width: dimensions.width }
-                  ]}
-              >
-                  <View>
-                      <View style={styles.containerText}>
-                          <Text style={styles.SubTitleCard}>
-                              Valor del recibo a pagar:
-                          </Text>
-                          <Text>
-                              text
-                          </Text>
-                      </View>
-                  </View>
-
-                  <View>
-                      <View style={styles.containerText}>
-                          <Text style={styles.SubTitleCard}>
-                              Tipo del recibo:
-                          </Text>
-                          <Text>
-                              edeed
-                          </Text>
-                      </View>
-                  </View>
-              </View>
-          </View>
+          {fetchedData}
         </ScrollView>
-          <Text>Home Screen</Text>
+        <Text>Home Screen</Text>
         <Button
           title="Go to details screen"
           onPress={() => this.props.navigation.navigate("Details")}
@@ -126,36 +167,20 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: "400"
     },
+    imageProfile: {
+      flex: 1, 
+      alignItems: 'center', 
+      justifyContent: 'center',
+      width: 200, 
+      height: 200, 
+      margin:5
+    },
+    SubTitleCardDescription:{
+      flexDirection:"row",
+      flexWrap:"wrap",
+      width:150,
+      padding:10,
+      height: 'auto', 
+    }
 });
 
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1, 
-//     alignItems: 'center', 
-//     justifyContent: 'center'
-//   },
-// });
-
-// const HomeScreen = ({navigation}) => {
-
-//     return (
-//       <View style={styles.container}>
-//         <Text>Home Screen</Text>
-//       <Button
-//         title="Go to details screen"
-//         onPress={() => navigation.navigate("Details")}
-//       />
-//       </View>
-//     );
-// };
-
-// export default HomeScreen;
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1, 
-//     alignItems: 'center', 
-//     justifyContent: 'center'
-//   },
-// });
