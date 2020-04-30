@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import HomeScreen from './components/HomeScreen'
 import DetailsScreen from './components/DetailsScreen'
+import DrawerContent from './components/DrawerContent'
 import * as ColorPalette from "./ColorPalette";
 
 const HomeStack = createStackNavigator();
@@ -67,7 +68,7 @@ const DetailsStackScreen = ({navigation})=>{
 function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Home">
+      <Drawer.Navigator initialRouteName="Home" drawerContent={props=><DrawerContent {...props}/>}>
         <Drawer.Screen name="Home" component={HomeStackScreen} />
         <Drawer.Screen name="Details" component={DetailsStackScreen} />
         
