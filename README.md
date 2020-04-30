@@ -27,7 +27,7 @@ npm install react-native-paper
 
 ## Arquitectura 🛠️
 
-* La aplicación se encunetra alojada en la carpeta js ahí encontarar los componentes, servicios , actionCreator, configRoutes, constantes de la app, y el store.
-*  La aplicación entra a app.js su principal componente es ConfigRoutes que a su vez se encuentra atado a los archivos de la carpeta js
+* La aplicación se encuentra alojada en la carpeta js ahí encontrara los componentes, servicios , actionCreator, configRoutes, constantes de la app, y el store.
+*  La aplicación entra a app.js y su principal componente es ConfigRoutes que a su vez se encuentra atado a los archivos de la carpeta js
 * Los componentes principales son DetailsScreen y DrawerContent que llaman a sus respectivos servicios para llamar los datos 
 * Los servicios se encuentran en la carpeta servicios dentro de js 
