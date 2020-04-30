@@ -13,6 +13,7 @@ import {
 import * as FetchData from "../services/FetchGists";
 import { storeGistDetail } from "../ActionCreators";
 import { connect } from "react-redux";
+
 var dimensions = {
     width: Dimensions.get("window").width / 1.5,
 };
@@ -35,7 +36,7 @@ class HomeScreen extends Component {
                   fetchDataConfirmation: true 
                 });
             } else {
-                alert("error en el fetch companies");
+                alert("Error  FetchAllGist at HomeScreen");
             }
     };
 
@@ -115,17 +116,12 @@ class HomeScreen extends Component {
         <ScrollView>
           {fetchedData}
         </ScrollView>
-        <Text>Home Screen</Text>
-        <Button
-          title="Go to details screen"
-          onPress={() => this.props.navigation.navigate("Details")}
-        />
+        <Text>Listado de gists </Text>
+        
       </View>
     );
   }
 }
-
-
 
 const styles = StyleSheet.create({
     container: {
